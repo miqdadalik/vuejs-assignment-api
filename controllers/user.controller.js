@@ -6,6 +6,7 @@ exports.test = function (req, res) {
 
 exports.signup = function (req, res,next) {
     //use bcrypt which needs python
+    
     var password = req.body.password;
     var user = new User(
         {
@@ -19,16 +20,26 @@ exports.signup = function (req, res,next) {
         if (err) {
             return next(err);
         }
-        res.send('User Created successfully');
+
+        res.send(JSON.stringify({
+            message: 'User Created successfully. Please Login',
+            status: true
+        }));
     })
 };
 
 exports.signin = function(req, res, next) {
+    console.log(req.body);
     var username = req.body.username;
     var password = req.body.password;
     User.findOne({ username: username, password: password }, function (err, user) {
-        if (err) { res.send('Invalid Username or Password') }
-        if (!user) { res.send('Invalid Username or Password') }
+        if (err || !user) { 
+            res.end(JSON.stringify({
+                message: 'Invalid Username or Password',
+                status: false
+            }));
+            return;
+        }
         // //if (!user.verifyPassword(password)) { return done(null, false); }
         sess = req.session;
         sess.email = user.username;
@@ -37,6 +48,10 @@ exports.signin = function(req, res, next) {
         res.setHeader('userLoggedIn', true);
         res.setHeader('user', sess.fullname);
         res.setHeader('userId', sess.userId);
-        res.send('Success');
+        res.send(JSON.stringify({
+            message: 'Success',
+            user: sess,
+            status: true
+        }));
     });
 }

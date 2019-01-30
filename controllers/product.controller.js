@@ -45,7 +45,10 @@ exports.allProducts = function(req, res, next) {
 exports.updateBooked = function (req, res, next) {
     Product.findByIdAndUpdate(req.params.id, {soldout: req.body.soldout}, function (err, product) {
         if (err) return next(err);
-        res.send('Product udpated.');
+        res.send(JSON.stringify({
+            message: 'Product blocked for the dates',
+            status: true
+        }));
     });
 };
 

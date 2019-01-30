@@ -11,10 +11,10 @@ var userRoutes = require('./routes/user.routes');
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json({ type: 'application/json' }))
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
+app.use(bodyParser.json({ type: 'application/json' }))
 app.use(session({secret: 'vuejs'}));
 
 var mongoose = require('mongoose');
@@ -32,6 +32,7 @@ app.get('/*',function(req, res, next){
         res.setHeader('user', sess.fullname);
         res.setHeader('userId', sess.userId);
     }
+    res.setHeader('Content-Type', 'application/json');
     next();
 });
 
