@@ -40,7 +40,7 @@ app.get('/*',function(req, res, next){
 app.use('/user', userRoutes);
 app.use('/products', productRoutes);
 
-let port = 1234;
+let port = 8080;
 app.listen(port, () => {
     console.log('Server is up and running on port numner ' + port);
 });
