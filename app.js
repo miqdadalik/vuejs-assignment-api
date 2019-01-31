@@ -18,7 +18,8 @@ app.use(bodyParser.json({ type: 'application/json' }))
 app.use(session({secret: 'vuejs'}));
 
 var mongoose = require('mongoose');
-var dev_db_url = 'mongodb://<username>:<password>@<server>:<port>/<dbname>';
+//var dev_db_url = 'mongodb://<username>:<password>@<server>:<port>/<dbname>';
+var dev_db_url = 'mongodb://miqdad:miqdad123@ds042898.mlab.com:42898/vuejs';
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
